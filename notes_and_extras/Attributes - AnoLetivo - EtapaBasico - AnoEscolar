@@ -1,0 +1,20 @@
+MODELS
+
+AnoLetivo:
+
+	ano_letivo_id
+	ano_letivo_nome
+
+
+EtapaBasico:
+
+	etapa_basica_id
+	etapa_basica_nome
+	etapa_basica_ano
+
+
+AnoEscolar:
+
+	ano_escolar_id
+	ano_escolar_nome
+	ano_escolar_etapa

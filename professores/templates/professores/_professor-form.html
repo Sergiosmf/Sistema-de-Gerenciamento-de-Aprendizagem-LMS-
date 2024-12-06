@@ -1,0 +1,1048 @@
+<!-- Professor Form -->
+{% load custom_tags %}
+<div class="container bg-light back02">
+    <form method="POST" class="form-group" name="professor_form" action="">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div><h4>Identificação</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="professor_nome">Nome <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="professor_nome" name="professor_nome" maxlength="100" required
+                       value="{% if request.POST %}{{ request.POST.professor_nome }}{% elif object.professor_nome %}{{ object.professor_nome }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_nome }}</p>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_data_nascimento">Data de nascimento <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="professor_data_nascimento" placeholder="dd/mm/aaaa" required name="professor_data_nascimento"  maxlength="10"
+                       value="{% if request.POST %}{{ request.POST.professor_data_nascimento }}{% elif object.professor_data_nascimento %}{{ object.professor_data_nascimento }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_data_nascimento }}</p>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_situacao">Situação do professor(a) <span style="color: red;">*</span></label>
+                <select class="form-control" id="professor_situacao" name="professor_situacao" required>
+                    {% for situacao in form.professor_situacao %}
+                        {{ situacao }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <!-- documentos -->
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="professor_inep">INEP</label>
+                <input type="text" class="form-control" id="professor_inep" name="professor_inep" maxlength="12"
+                       value="{% if request.POST %}{{ request.POST.professor_inep }}{% elif object.professor_inep %}{{ object.professor_inep }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_inep }}</p>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_cpf">CPF</label>
+                <input type="text" class="form-control" id="professor_cpf" name="professor_cpf" maxlength="14"
+                       value="{% if request.POST %}{{ request.POST.professor_cpf }}{% elif object.professor_cpf %}{{ object.professor_cpf }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_cpf }}</p>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_rg">RG</label>
+                <input type="text" class="form-control" id="professor_rg" name="professor_rg" maxlength="20"
+                       value="{% if request.POST %}{{ request.POST.professor_rg }}{% elif object.professor_rg %}{{ object.professor_rg }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_rg }}</p>
+            </div>
+        </div>
+        <!-- Sexo / Cor -->
+        <div class="form-row justify-content-between">
+            <div class="form-group col-md-7">
+                <div class="form-check-label"><p>Cor / Raça <span style="color: red;">*</span></p></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_cor0" name="professor_cor"
+                         value="0" checked {% if request.POST.professor_cor == "0" or object.professor_cor == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_cor0">Não declarada</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_cor1" name="professor_cor"
+                         value="1" {% if request.POST.professor_cor == "1" or object.professor_cor == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_cor1">Branca</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_cor2" name="professor_cor"
+                         value="2" {% if request.POST.professor_cor == "2" or object.professor_cor == "2" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_cor2">Preta</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_cor3" name="professor_cor"
+                         value="3" {% if request.POST.professor_cor == "3" or object.professor_cor == "3" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_cor3">Parda</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_cor4" name="professor_cor"
+                         value="4" {% if request.POST.professor_cor == "4" or object.professor_cor == "4" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_cor4">Amarela</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_cor5" name="professor_cor"
+                         value="5" {% if request.POST.professor_cor == "5" or object.professor_cor == "5" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_cor5">Indígena</label>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <div class="form-check-label"><p>Sexo <span style="color: red;">*</span></p></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_sexo1" name="professor_sexo"
+                         value="1" {% if request.POST.professor_sexo == "1" or object.professor_sexo == "1" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_sexo1">Masculino</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_sexo2" name="professor_sexo"
+                         value="2" {% if request.POST.professor_sexo == "2" or object.professor_sexo == "2" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_sexo2">Feminino</label>
+                </div>
+            </div>
+        </div>
+        <!-- Nacionalidade -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div><h4>Nacionalidade</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="professor_nacionalidade">Nacionalidade <span style="color: red;">*</span></label>
+                <select class="form-control" id="professor_nacionalidade" name="professor_nacionalidade" required>
+                    {% for nacionalidade in form.professor_nacionalidade %}
+                        {{ nacionalidade }}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_pais_nascimento">País de nascimento <span style="color: red;">*</span></label>
+                <select class="form-control" id="professor_pais_nascimento" name="professor_pais_nascimento" required>
+                    {% for pais_nascimento in form.professor_pais_nascimento %}
+                        {{ pais_nascimento }}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_estado_nascimento">Estado de nascimento</label>
+                <select class="form-control" id="professor_estado_nascimento" name="professor_estado_nascimento">
+                    {% for estado_nascimento in form.professor_estado_nascimento %}
+                        {{ estado_nascimento }}
+                    {% endfor %}
+                </select>
+                <small id="password-help" class="form-text text-muted">
+                    Preencher se a nacionalidade for brasileira.
+                </small>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_municipio_nascimento">Municipio de nascimento</label>
+                <input type="text" class="form-control" id="professor_municipio_nascimento" name="professor_municipio_nascimento"  maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_municipio_nascimento }}{% elif object.professor_municipio_nascimento %}{{ object.professor_municipio_nascimento }}{% endif %}">
+{#                <select class="form-control" id="professor_municipio_nascimento" name="professor_municipio_nascimento" required>#}
+{#                    {% for municipio_nascimento in form.professor_municipio_nascimento %}#}
+{#                        {{ municipio_nascimento }}#}
+{#                    {% endfor %}#}
+{#                </select>#}
+                <small id="password-help" class="form-text text-muted">
+                    Preencher se a nacionalidade for brasileira.
+                </small>
+            </div>
+        </div>
+        <!-- Residencia -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div><h4>Residência</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="professor_logradouro_residencia">Logradoro <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="professor_logradouro_residencia" name="professor_logradouro_residencia" maxlength="100" required
+                       value="{% if request.POST %}{{ request.POST.professor_logradouro_residencia }}{% elif object.professor_logradouro_residencia %}{{ object.professor_logradouro_residencia }}{% endif %}">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="professor_numero_residencia">Número <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="professor_numero_residencia" name="professor_numero_residencia"  maxlength="10" required
+                       value="{% if request.POST %}{{ request.POST.professor_numero_residencia }}{% elif object.professor_numero_residencia %}{{ object.professor_numero_residencia }}{% endif %}">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="professor_bairro_residencia">Bairro <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="professor_bairro_residencia" name="professor_bairro_residencia" maxlength="50" required
+                       value="{% if request.POST %}{{ request.POST.professor_bairro_residencia }}{% elif object.professor_bairro_residencia %}{{ object.professor_bairro_residencia }}{% endif %}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="professor_complemento_residencia">Complemento</label>
+                <input type="text" class="form-control" id="professor_complemento_residencia" name="professor_complemento_residencia"  maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_complemento_residencia }}{% elif object.professor_complemento_residencia %}{{ object.professor_complemento_residencia }}{% endif %}">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_zona_residencia">Zona de Residência <span style="color: red;">*</span></label>
+                <select class="form-control" id="professor_zona_residencia" name="professor_zona_residencia" required>
+                    {% for zona_residencia in form.professor_zona_residencia %}
+                        {{ zona_residencia }}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_localizacao_residencia">Localização diferenciada <span style="color: red;">*</span></label>
+                <select class="form-control" id="professor_localizacao_residencia" name="professor_localizacao_residencia" required>
+                    {% for localizacao_residencia in form.professor_localizacao_residencia %}
+                        {{ localizacao_residencia }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="professor_cep_residencia">CEP <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="professor_cep_residencia" name="professor_cep_residencia" maxlength="9" required
+                       value="{% if request.POST %} {{ request.POST.professor_cep_residencia }} {% elif object.professor_cep_residencia %} {{ object.professor_cep_residencia }} {% else %} {{ constant_cep }} {% endif %}">
+                <p class="errorlist">{{ form.errors.professor_cep_residencia }}</p>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_estado_residencia">Estado Residência <span style="color: red;">*</span></label>
+                <select class="form-control" id="professor_estado_residencia" name="professor_estado_residencia" required>
+                    {% for estado_residencia in form.professor_estado_residencia %}
+                        {{ estado_residencia }}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_municipio_residencia">Municipio de residência <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="professor_municipio_residencia" name="professor_municipio_residencia" maxlength="100" required
+                       value="{% if request.POST %}{{ request.POST.professor_municipio_residencia }} {% elif object.professor_municipio_residencia %}{{ object.professor_municipio_residencia }} {% else %} {{ constant_municipio }} {% endif %}">
+{#                <select class="form-control" id="professor_municipio_nascimento" name="professor_municipio_nascimento" required>#}
+{#                    {% for municipio_nascimento in form.professor_municipio_nascimento %}#}
+{#                        {{ municipio_nascimento }}#}
+{#                    {% endfor %}#}
+{#                </select>#}
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_pais_residencia">País de residência <span style="color: red;">*</span></label>
+                <select class="form-control" id="professor_pais_residencia" name="professor_pais_residencia" required>
+                    {% for pais_residencia in form.professor_pais_residencia %}
+                        {{ pais_residencia }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <!-- Contatos -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div><h4>Contatos</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="professor_ddd">DDD</label>
+                <input type="text" class="form-control" id="professor_ddd" name="professor_ddd" maxlength="2"
+                       value="{% if request.POST %}{{ request.POST.professor_ddd }}{% elif object.professor_ddd %}{{ object.professor_ddd }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_ddd }}</p>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="professor_telefone">Telefone</label>
+                <input type="text" class="form-control" id="professor_telefone" name="professor_telefone" maxlength="9"
+                       value="{% if request.POST %}{{ request.POST.professor_telefone }}{% elif object.professor_telefone %}{{ object.professor_telefone }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_telefone }}</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="professor_email">Email</label>
+                <input type="email" class="form-control" id="professor_email" name="professor_email" maxlength="250"
+                       value="{% if request.POST %}{{ request.POST.professor_email }}{% elif object.professor_email %}{{ object.professor_email }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_email }}</p>
+            </div>
+        </div>
+        <!-- Filiação -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check-label"><h4>Filiação <span style="color: red;">*</span></h4></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_filiacao2" name="professor_filiacao"
+                         value="1" checked {% if request.POST.professor_filiacao == "1" or object.professor_filiacao == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_filiacao2">Filiação 1 e/ou Filiação 2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_filiacao1" name="professor_filiacao"
+                         value="0" {% if request.POST.professor_filiacao == "0" or object.professor_filiacao == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_filiacao1">Não declarado/Ignorado</label>
+                </div>
+            </div>
+        </div>
+        <!-- Filiação 1 -->
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="professor_filiacao1_nome">Mãe</label>
+                <input type="text" class="form-control" id="professor_filiacao1_nome" name="professor_filiacao1_nome" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_filiacao1_nome }}{% elif object.professor_filiacao1_nome %}{{ object.professor_filiacao1_nome }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_filiacao1_nome }}</p>
+            </div>
+        </div>
+        <!-- Filiação 2 -->
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="professor_filiacao2_nome">Pai</label>
+                <input type="text" class="form-control" id="professor_filiacao2_nome" name="professor_filiacao2_nome" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_filiacao2_nome }}{% elif object.professor_filiacao2_nome %}{{ object.professor_filiacao2_nome }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_filiacao2_nome }}</p>
+            </div>
+        </div>
+        <!-- Ensino em outro lugar -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div class="form-check-label"><h4><label for="professor_ensino_outro_lugar">Ensino em outro lugar <span style="color: red;">*</span></label></h4></div>
+                <select class="form-control" id="professor_ensino_outro_lugar" name="professor_ensino_outro_lugar">
+                    {% for ensino_outro_lugar in form.professor_ensino_outro_lugar %}
+                        {{ ensino_outro_lugar }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <!-- Escolaridade -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div><h4>Escolaridade</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div class="form-check-label"><label for="professor_nivel_escolaridade">Nível de escolaridade <span style="color: red;">*</span></label></div>
+                <select class="form-control" id="professor_nivel_escolaridade" name="professor_nivel_escolaridade" required>
+                    {% for nivel_escolaridade in form.professor_nivel_escolaridade %}
+                        {{ nivel_escolaridade }}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-check-label"><label for="professor_tipo_ensino_medio">Tipo de ensino médio cursado</label></div>
+                <select class="form-control" id="professor_tipo_ensino_medio" name="professor_tipo_ensino_medio">
+                    {% for tipo_ensino_medio in form.professor_tipo_ensino_medio %}
+                        {{ tipo_ensino_medio }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <!-- Cursos -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div><h4>Cursos</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div class="form-check-label"><label for="professor_curso1">Curso 1</label></div>
+                <select class="form-control" id="professor_curso1" name="professor_curso1">
+                    {% for curso1 in form.professor_curso1 %}
+                        {{ curso1 }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-2">
+                <label for="professor_curso_conclusao1">Ano de conclusão</label>
+                <input type="text" class="form-control" id="professor_curso_conclusao1" name="professor_curso_conclusao1" maxlength="4"
+                       value="{% if request.POST %}{{ request.POST.professor_curso_conclusao1 }}{% elif object.professor_curso_conclusao1 %}{{ object.professor_curso_conclusao1 }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_curso_conclusao1 }}</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="professor_curso_instituicao1">Instituição de Educação Superior</label>
+                <input type="text" class="form-control" id="professor_curso_instituicao1" name="professor_curso_instituicao1" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_curso_instituicao1 }}{% elif object.professor_curso_instituicao1 %}{{ object.professor_curso_instituicao1 }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_curso_instituicao1 }}</p>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="form-check form-check-inline ml-4">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_publica1" name="professor_curso_publica1"
+                         value="1" {% if request.POST.professor_curso_publica1 == "1" or object.professor_curso_publica1 == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_publica1">Pública</label>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_privada1" name="professor_curso_privada1"
+                         value="1" {% if request.POST.professor_curso_privada1 == "1" or object.professor_curso_privada1 == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_privada1">Privada</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div class="form-check-label"><label for="professor_curso2">Curso 2</label></div>
+                <select class="form-control" id="professor_curso2" name="professor_curso2">
+                    {% for curso2 in form.professor_curso2 %}
+                        {{ curso2 }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-2">
+                <label for="professor_curso_conclusao2">Ano de conclusão</label>
+                <input type="text" class="form-control" id="professor_curso_conclusao2" name="professor_curso_conclusao2" maxlength="4"
+                       value="{% if request.POST %}{{ request.POST.professor_curso_conclusao2 }}{% elif object.professor_curso_conclusao2 %}{{ object.professor_curso_conclusao2 }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_curso_conclusao2 }}</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="professor_curso_instituicao2">Instituição de Educação Superior</label>
+                <input type="text" class="form-control" id="professor_curso_instituicao2" name="professor_curso_instituicao2" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_curso_instituicao2 }}{% elif object.professor_curso_instituicao2 %}{{ object.professor_curso_instituicao2 }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_curso_instituicao2 }}</p>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="form-check form-check-inline ml-4">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_publica2" name="professor_curso_publica2"
+                         value="1" {% if request.POST.professor_curso_publica2 == "1" or object.professor_curso_publica2 == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_publica2">Pública</label>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_privada2" name="professor_curso_privada2"
+                         value="1" {% if request.POST.professor_curso_privada2 == "1" or object.professor_curso_privada2 == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_privada2">Privada</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div class="form-check-label"><label for="professor_curso3">Curso 2</label></div>
+                <select class="form-control" id="professor_curso3" name="professor_curso3">
+                    {% for curso3 in form.professor_curso3 %}
+                        {{ curso3 }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-2">
+                <label for="professor_curso_conclusao3">Ano de conclusão</label>
+                <input type="text" class="form-control" id="professor_curso_conclusao3" name="professor_curso_conclusao3" maxlength="4"
+                       value="{% if request.POST %}{{ request.POST.professor_curso_conclusao3 }}{% elif object.professor_curso_conclusao3 %}{{ object.professor_curso_conclusao3 }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_curso_conclusao3 }}</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="professor_curso_instituicao3">Instituição de Educação Superior</label>
+                <input type="text" class="form-control" id="professor_curso_instituicao3" name="professor_curso_instituicao3" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_curso_instituicao3 }}{% elif object.professor_curso_instituicao3 %}{{ object.professor_curso_instituicao3 }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_curso_instituicao3 }}</p>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="form-check form-check-inline ml-4">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_publica3" name="professor_curso_publica3"
+                         value="1" {% if request.POST.professor_curso_publica3 == "1" or object.professor_curso_publica3 == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_publica3">Pública</label>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_privada3" name="professor_curso_privada3"
+                         value="1" {% if request.POST.professor_curso_privada3 == "1" or object.professor_curso_privada3 == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_privada3">Privada</label>
+                </div>
+            </div>
+        </div>
+        <!-- Formação / Complementação Pedagógica / Componente curricular -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <div><h4>Formação / Complementação Pedagógica</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div class="form-check-label"><label for="professor_area_conhecimento1">Componenete curricular 1</label></div>
+                <select class="form-control" id="professor_area_conhecimento1" name="professor_area_conhecimento1">
+                    {% for area_conhecimento1 in form.professor_area_conhecimento1 %}
+                        {{ area_conhecimento1 }}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-check-label"><label for="professor_area_conhecimento2">Componenete curricular 2</label></div>
+                <select class="form-control" id="professor_area_conhecimento2" name="professor_area_conhecimento2">
+                    {% for area_conhecimento2 in form.professor_area_conhecimento2 %}
+                        {{ area_conhecimento2 }}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-check-label"><label for="professor_area_conhecimento3">Componenete curricular 3</label></div>
+                <select class="form-control" id="professor_area_conhecimento3" name="professor_area_conhecimento3">
+                    {% for area_conhecimento3 in form.professor_area_conhecimento3 %}
+                        {{ area_conhecimento3 }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <!-- Pós graduações concluidas -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div><h4>Pós graduações concluidas</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <div class="form-check-label">Tem pós graduação concluida <span style="color: red;">*</span></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_pos_graduacao_concluida1" name="professor_pos_graduacao_concluida"
+                         checked value="0" {% if request.POST.professor_pos_graduacao_concluida == "0" or object.professor_pos_graduacao_concluida == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_pos_graduacao_concluida1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_pos_graduacao_concluida2" name="professor_pos_graduacao_concluida"
+                         value="1" {% if request.POST.professor_pos_graduacao_concluida == "1" or object.professor_pos_graduacao_concluida == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_pos_graduacao_concluida2">Sim</label>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <div class="form-check-label">Especialização <span style="color: red;">*</span></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_especializacao1" name="professor_especializacao"
+                         checked value="0" {% if request.POST.professor_especializacao == "0" or object.professor_especializacao == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_especializacao1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_especializacao2" name="professor_especializacao"
+                         value="1" {% if request.POST.professor_especializacao == "1" or object.professor_especializacao == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_especializacao2">Sim</label>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <div class="form-check-label">Mestrado <span style="color: red;">*</span></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_mestrado1" name="professor_mestrado"
+                         checked value="0" {% if request.POST.professor_mestrado == "0" or object.professor_mestrado == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_mestrado1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_mestrado2" name="professor_mestrado"
+                         value="1" {% if request.POST.professor_mestrado == "1" or object.professor_mestrado == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_mestrado2">Sim</label>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <div class="form-check-label">Doutorado <span style="color: red;">*</span></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_doutorado1" name="professor_doutorado"
+                         checked value="0" {% if request.POST.professor_doutorado == "0" or object.professor_doutorado == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_doutorado1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_doutorado2" name="professor_doutorado"
+                         value="1" {% if request.POST.professor_doutorado == "1" or object.professor_doutorado == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_doutorado2">Sim</label>
+                </div>
+            </div>
+        </div>
+        <!-- Outros cursos específicos -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div><h4>Outros cursos específicos</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <div class="form-check-label">Tem outros cursos específicos <span style="color: red;">*</span></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_outros_cursos1" name="professor_outros_cursos"
+                         checked value="0" {% if request.POST.professor_outros_cursos == "0" or object.professor_outros_cursos == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_outros_cursos1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_outros_cursos2" name="professor_outros_cursos"
+                         value="1" {% if request.POST.professor_outros_cursos == "1" or object.professor_outros_cursos == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_outros_cursos2">Sim</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_creche" name="professor_curso_creche"
+                         value="1" {% if request.POST.professor_curso_creche == "1" or object.professor_curso_creche == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_creche">Creche</label>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_pre_escola" name="professor_curso_pre_escola"
+                         value="1" {% if request.POST.professor_curso_pre_escola == "1" or object.professor_curso_pre_escola == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_pre_escola">Pré-escola</label>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_fundamental1" name="professor_curso_fundamental1"
+                         value="1" {% if request.POST.professor_curso_fundamental1 == "1" or object.professor_curso_fundamental1 == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_fundamental1">Anos iniciais do ensino fundamental</label>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_fundamental2" name="professor_curso_fundamental2"
+                         value="1" {% if request.POST.professor_curso_fundamental2 == "1" or object.professor_curso_fundamental2 == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_fundamental2">Anos finais do ensino fundamental</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_ensino_medio" name="professor_curso_ensino_medio"
+                         value="1" {% if request.POST.professor_curso_ensino_medio == "1" or object.professor_curso_ensino_medio == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_ensino_medio">Ensino médio</label>
+                </div>
+            </div>
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_educacao_especial" name="professor_curso_educacao_especial"
+                         value="1" {% if request.POST.professor_curso_educacao_especial == "1" or object.professor_curso_educacao_especial == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_educacao_especial">Educação especial</label>
+                </div>
+            </div>
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_jovens_adultos" name="professor_curso_jovens_adultos"
+                         value="1" {% if request.POST.professor_curso_jovens_adultos == "1" or object.professor_curso_jovens_adultos == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_jovens_adultos">Educação de jovens e adultos</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_educacao_indigena" name="professor_curso_educacao_indigena"
+                         value="1" {% if request.POST.professor_curso_educacao_indigena == "1" or object.professor_curso_educacao_indigena == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_educacao_indigena">Educação indígena</label>
+                </div>
+            </div>
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_educacao_campo" name="professor_curso_educacao_campo"
+                         value="1" {% if request.POST.professor_curso_educacao_campo == "1" or object.professor_curso_educacao_campo == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_educacao_campo">Educação do campo</label>
+                </div>
+            </div>
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_educacao_ambiental" name="professor_curso_educacao_ambiental"
+                         value="1" {% if request.POST.professor_curso_educacao_ambiental == "1" or object.professor_curso_educacao_ambiental == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_educacao_ambiental">Educação ambiental</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_direitos_humanos" name="professor_curso_direitos_humanos"
+                         value="1" {% if request.POST.professor_curso_direitos_humanos == "1" or object.professor_curso_direitos_humanos == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_direitos_humanos">Educação em direitos humanos</label>
+                </div>
+            </div>
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_diversidade_sexual" name="professor_curso_diversidade_sexual"
+                         value="1" {% if request.POST.professor_curso_diversidade_sexual == "1" or object.professor_curso_diversidade_sexual == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_diversidade_sexual">Gênero e diversidade sexual</label>
+                </div>
+            </div>
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_direitos_crianca" name="professor_curso_direitos_crianca"
+                         value="1" {% if request.POST.professor_curso_direitos_crianca == "1" or object.professor_curso_direitos_crianca == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_direitos_crianca">Direitos de crianças e adolescentes</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_relacoes_etnicas" name="professor_curso_relacoes_etnicas"
+                         value="1" {% if request.POST.professor_curso_relacoes_etnicas == "1" or object.professor_curso_relacoes_etnicas == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_relacoes_etnicas">Educação para as relações étnico-raciais</label>
+                </div>
+            </div>
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_gestao_escolar" name="professor_curso_gestao_escolar"
+                         value="1" {% if request.POST.professor_curso_gestao_escolar == "1" or object.professor_curso_gestao_escolar == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_gestao_escolar">Gestão escolar</label>
+                </div>
+            </div>
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="professor_curso_outros" name="professor_curso_outros"
+                         value="1" {% if request.POST.professor_curso_outros == "1" or object.professor_curso_outros == "1" %}checked="checked"{% endif %}>
+                    <label class="form-check-label" for="professor_curso_outros">Outros cursos</label>
+                </div>
+            </div>
+        </div>
+        <!-- Falta de documentos -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="professor_justificativa_documentos"><h4>Justificativa da falta de documentos</h4></label>
+                <select class="form-control" id="professor_justificativa_documentos" name="professor_justificativa_documentos">
+                    {% for justificativa in form.professor_justificativa_documentos %}
+                        {{ justificativa }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <!-- Deficiencias -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check-label"><h4>Deficiência, Transtorno do Espectro Autista ou Altas Habilidades / Superdotação <span style="color: red;">*</span></h4></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_deficiencia1" name="professor_deficiencia"
+                         checked value="0" {% if request.POST.professor_deficiencia == "0" or object.professor_deficiencia == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_deficiencia1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_deficiencia2" name="professor_deficiencia"
+                         value="1" {% if request.POST.professor_deficiencia == "1" or object.professor_deficiencia == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_deficiencia2">Sim</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="professor_cegueira" name="professor_cegueira"
+                         value="1" {% if request.POST.professor_cegueira == "1" or object.professor_cegueira == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_cegueira">Cegueira</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="professor_baixa_visao" name="professor_baixa_visao"
+                         value="1" {% if request.POST.professor_baixa_visao == "1" or object.professor_baixa_visao == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_baixa_visao">Baixa Visão</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="professor_surdez" name="professor_surdez"
+                         value="1" {% if request.POST.professor_surdez == "1" or object.professor_surdez == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_surdez">Surdez</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="professor_deficiencia_auditiva" name="professor_deficiencia_auditiva"
+                         value="1" {% if request.POST.professor_deficiencia_auditiva == "1" or object.professor_deficiencia_auditiva == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_deficiencia_auditiva">Deficiência auditiva</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="professor_surdocegueira" name="professor_surdocegueira"
+                         value="1" {% if request.POST.professor_surdocegueira == "1" or object.professor_surdocegueira == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_surdocegueira">Surdocegueira</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="professor_deficiencia_fisica" name="professor_deficiencia_fisica"
+                         value="1" {% if request.POST.professor_deficiencia_fisica == "1" or object.professor_deficiencia_fisica == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_deficiencia_fisica">Deficiência física</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="professor_deficiencia_intelectual" name="professor_deficiencia_intelectual"
+                         value="1" {% if request.POST.professor_deficiencia_intelectual == "1" or object.professor_deficiencia_intelectual == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_deficiencia_intelectual">Deficiência intelectual</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="professor_deficiencia_multipla" name="professor_deficiencia_multipla"
+                         value="1" {% if request.POST.professor_deficiencia_multipla == "1" or object.professor_deficiencia_multipla == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_deficiencia_multipla">Deficiência múltipla</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="professor_autismo" name="professor_autismo"
+                         value="1" {% if request.POST.professor_autismo == "1" or object.professor_autismo == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_autismo">Autismo</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="professor_altas_habilidades" name="professor_altas_habilidades"
+                         value="1" {% if request.POST.professor_altas_habilidades == "1" or object.professor_altas_habilidades == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_altas_habilidades">Altas habilidades / superdotação</label>
+                </div>
+            </div>
+        </div>
+        <!-- Urgencia -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col">
+                <div><h4>Urgência</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="professor_urgencia_nome">Nome da pessoa a chamar em caso de urgência</label>
+                <input type="text" class="form-control" id="professor_urgencia_nome" name="professor_urgencia_nome" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_urgencia_nome }}{% elif object.professor_urgencia_nome %}{{ object.professor_urgencia_nome }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_urgencia_nome }}</p>
+            </div>
+            <div class="form-group col-md-1">
+                <label for="professor_urgencia_ddd">DDD</label>
+                <input type="text" class="form-control" id="professor_urgencia_ddd" name="professor_urgencia_ddd" maxlength="2"
+                       value="{% if request.POST %}{{ request.POST.professor_urgencia_ddd }}{% elif object.professor_urgencia_ddd %}{{ object.professor_urgencia_ddd }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_urgencia_ddd }}</p>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="professor_urgencia_telefone">Telefone</label>
+                <input type="text" class="form-control" id="professor_urgencia_telefone" name="professor_urgencia_telefone" maxlength="9"
+                       value="{% if request.POST %}{{ request.POST.professor_urgencia_telefone }}{% elif object.professor_urgencia_telefone %}{{ object.professor_urgencia_telefone }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_urgencia_telefone }}</p>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="professor_urgencia_parentesco">Parentesco</label>
+                <input type="text" class="form-control" id="professor_urgencia_parentesco" name="professor_urgencia_parentesco"  maxlength="50"
+                       value="{% if request.POST %}{{ request.POST.professor_urgencia_parentesco }}{% elif object.professor_urgencia_parentesco %}{{ object.professor_urgencia_parentesco }}{% endif %}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="professor_urgencia_procedimentos">Procedimentos em caso de urgência</label>
+                <textarea class="form-control" id="professor_urgencia_procedimentos" name="professor_urgencia_procedimentos"  maxlength="1000" wrap="hard">{% if request.POST %}{{ request.POST.professor_urgencia_procedimentos }}{% elif object.professor_urgencia_procedimentos %}{{ object.professor_urgencia_procedimentos }}{% else %}{% endif %}</textarea>
+            </div>
+        </div>
+        <!-- Cuidados diferenciados -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col">
+                <div><h4>Cuidados Diferenciados</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check-label">Alergia(s) <span style="color: red;">*</span></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_alergia1" name="professor_alergia"
+                         checked value="0" {% if request.POST.professor_alergia == "0" or object.professor_alergia == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_alergia1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_alergia1" name="professor_alergia"
+                         value="1" {% if request.POST.professor_alergia == "1" or object.professor_alergia == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_alergia2">Sim</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="professor_alergia_tipo">Tipo(s) de alergia(s), cuidados e procedimentos</label>
+                <textarea class="form-control" id="professor_alergia_tipo" name="professor_alergia_tipo"  maxlength="1000">{% if request.POST %}{{ request.POST.professor_alergia_tipo }}{% elif object.professor_alergia_tipo %}{{ object.professor_alergia_tipo }}{% else %}{% endif %}</textarea>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="professor_cuidados_diferenciados">Cuidados diferenciados</label>
+                <textarea class="form-control" id="professor_cuidados_diferenciados" name="professor_cuidados_diferenciados"  maxlength="1000">{% if request.POST %}{{ request.POST.professor_cuidados_diferenciados }}{% elif object.professor_cuidados_diferenciados %}{{ object.professor_cuidados_diferenciados }}{% else %}{% endif %}</textarea>
+            </div>
+        </div>
+        <!-- Plano de saúde -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check-label"><h4>Plano de Saúde <span style="color: red;">*</span></h4></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_plano_saude1" name="professor_plano_saude"
+                         checked value="0" {% if request.POST.professor_plano_saude == "0" or object.professor_plano_saude == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_plano_saude1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_plano_saude2" name="professor_plano_saude"
+                         value="1" {% if request.POST.professor_plano_saude == "1" or object.professor_plano_saude == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_plano_saude2">Sim</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="professor_plano_saude_nome">Nome do plano de saúde</label>
+                <input type="text" class="form-control" id="professor_plano_saude_nome" name="professor_plano_saude_nome" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_plano_saude_nome }}{% elif object.professor_plano_saude_nome %}{{ object.professor_plano_saude_nome }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_plano_saude_nome }}</p>
+            </div>
+            <div class="form-group col-md-1">
+                <label for="professor_plano_saude_ddd">DDD</label>
+                <input type="text" class="form-control" id="professor_plano_saude_ddd" name="professor_plano_saude_ddd" maxlength="2"
+                       value="{% if request.POST %}{{ request.POST.professor_plano_saude_ddd }}{% elif object.professor_plano_saude_ddd %}{{ object.professor_plano_saude_ddd }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_plano_saude_ddd }}</p>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="professor_plano_saude_telefone">Telefone</label>
+                <input type="text" class="form-control" id="professor_plano_saude_telefone" name="professor_plano_saude_telefone" maxlength="9"
+                       value="{% if request.POST %}{{ request.POST.professor_plano_saude_telefone }}{% elif object.professor_plano_saude_telefone %}{{ object.professor_plano_saude_telefone }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_plano_saude_telefone }}</p>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="professor_plano_saude_email">Email</label>
+                <input type="text" class="form-control" id="professor_plano_saude_email" name="professor_plano_saude_email" maxlength="250"
+                       value="{% if request.POST %}{{ request.POST.professor_plano_saude_email }}{% elif object.professor_plano_saude_email %}{{ object.professor_plano_saude_email }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_plano_saude_email }}</p>
+            </div>
+        </div>
+        <!-- Convenio -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check-label"><h4>Convênio <span style="color: red;">*</span></h4></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_convenio1" name="professor_convenio"
+                         checked value="0" {% if request.POST.professor_convenio == "0" or object.professor_convenio == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_convenio1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_convenio2" name="professor_convenio"
+                         value="1" {% if request.POST.professor_convenio == "1" or object.professor_convenio == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_convenio2">Sim</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="professor_convenio_nome">Nome do convênio</label>
+                <input type="text" class="form-control" id="professor_convenio_nome" name="professor_convenio_nome" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_convenio_nome }}{% elif object.professor_convenio_nome %}{{ object.professor_convenio_nome }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_convenio_nome }}</p>
+            </div>
+            <div class="form-group col-md-1">
+                <label for="professor_convenio_ddd">DDD</label>
+                <input type="text" class="form-control" id="professor_convenio_ddd" name="professor_convenio_ddd" maxlength="2"
+                       value="{% if request.POST %}{{ request.POST.professor_convenio_ddd }}{% elif object.professor_convenio_ddd %}{{ object.professor_convenio_ddd }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_convenio_ddd }}</p>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="professor_convenio_telefone">Telefone</label>
+                <input type="text" class="form-control" id="professor_convenio_telefone" name="professor_convenio_telefone" maxlength="9"
+                       value="{% if request.POST %}{{ request.POST.professor_convenio_telefone }}{% elif object.professor_convenio_telefone %}{{ object.professor_convenio_telefone }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_convenio_telefone }}</p>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="professor_convenio_email">Email</label>
+                <input type="text" class="form-control" id="professor_convenio_email" name="professor_convenio_email" maxlength="250"
+                       value="{% if request.POST %}{{ request.POST.professor_convenio_email }}{% elif object.professor_convenio_email %}{{ object.professor_convenio_email }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_convenio_email }}</p>
+            </div>
+        </div>
+        <!-- Programa social -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check-label"><h4>Programa Social <span style="color: red;">*</span></h4></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_programa_social1" name="professor_programa_social"
+                         checked value="0" {% if request.POST.professor_programa_social == "0" or object.professor_programa_social == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_programa_social1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_programa_social2" name="professor_programa_social"
+                         value="1" {% if request.POST.professor_programa_social == "1" or object.professor_programa_social == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_programa_social2">Sim</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="professor_programa_social_nome">Nome do Programa Social</label>
+                <input type="text" class="form-control" id="professor_programa_social_nome" name="professor_programa_social_nome" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_programa_social_nome }}{% elif object.professor_programa_social_nome %}{{ object.professor_programa_social_nome }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_programa_social_nome }}</p>
+            </div>
+            <div class="form-group col-md-1">
+                <label for="professor_programa_social_ddd">DDD</label>
+                <input type="text" class="form-control" id="professor_programa_social_ddd" name="professor_programa_social_ddd" maxlength="2"
+                       value="{% if request.POST %}{{ request.POST.professor_programa_social_ddd }}{% elif object.professor_programa_social_ddd %}{{ object.professor_programa_social_ddd }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_programa_social_ddd }}</p>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="professor_programa_social_telefone">Telefone</label>
+                <input type="text" class="form-control" id="professor_programa_social_telefone" name="professor_programa_social_telefone" maxlength="9"
+                       value="{% if request.POST %}{{ request.POST.professor_programa_social_telefone }}{% elif object.professor_programa_social_telefone %}{{ object.professor_programa_social_telefone }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_programa_social_telefone }}</p>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="professor_programa_social_email">Email</label>
+                <input type="text" class="form-control" id="professor_programa_social_email" name="professor_programa_social_email" maxlength="250"
+                       value="{% if request.POST %}{{ request.POST.professor_programa_social_email }}{% elif object.professor_programa_social_email %}{{ object.professor_programa_social_email }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_programa_social_email }}</p>
+            </div>
+        </div>
+        <!-- Estágio -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col">
+                <div class="form-check-label"><h4>Estágio <span style="color: red;">*</span></h4></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_estagio1" name="professor_estagio"
+                         checked value="0" {% if request.POST.professor_estagio == "0" or object.professor_estagio == "0" %}checked="checked"{% endif %} required>
+                  <label class="form-check-label" for="professor_estagio1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="professor_estagio2" name="professor_estagio"
+                         value="1" {% if request.POST.professor_estagio == "1" or object.professor_estagio == "1" %}checked="checked"{% endif %}>
+                  <label class="form-check-label" for="professor_estagio2">Sim</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="professor_estagio_instituicao">Instituição</label>
+                <input type="text" class="form-control" id="professor_estagio_instituicao" name="professor_estagio_instituicao" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_estagio_instituicao }}{% elif object.professor_estagio_instituicao %}{{ object.professor_estagio_instituicao }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_estagio_instituicao }}</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="professor_estagio_tempo">Tempo de estágio</label>
+                <input type="text" class="form-control" id="professor_estagio_tempo" name="professor_estagio_tempo" maxlength="100"
+                       value="{% if request.POST %}{{ request.POST.professor_estagio_tempo }}{% elif object.professor_estagio_tempo %}{{ object.professor_estagio_tempo }}{% endif %}">
+                <p class="errorlist">{{ form.errors.professor_estagio_tempo }}</p>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="professor_estagio_observacoes">Observações do estágio</label>
+                <textarea class="form-control" id="professor_estagio_observacoes" name="professor_estagio_observacoes"  maxlength="1000">{% if request.POST %}{{ request.POST.professor_estagio_observacoes }}{% elif object.professor_estagio_observacoes %}{{ object.professor_estagio_observacoes }}{% else %}{% endif %}</textarea>
+            </div>
+        </div>
+        <!-- Observações -->
+        <hr>
+        <div class="form-row">
+            <div class="form-group col">
+                <div><h4>Observações</h4></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="professor_observacoes"></label>
+                <textarea class="form-control" id="professor_observacoes" name="professor_observacoes"  maxlength="1000">{% if request.POST %}{{ request.POST.professor_observacoes }}{% elif object.professor_observacoes %}{{ object.professor_observacoes }}{% else %}{% endif %}</textarea>
+            </div>
+        </div>
+        <hr><br>
+        <div class="form-row">
+            <div class="form-group col d-flex justify-content-between">
+                <button class="btn btn-dark-blue px-4 shadow-sm noprint" type="submit">Salvar</button>
+                {% if professor.pk %}
+                    <a class="ml-3 btn button-del px-4 shadow-sm noprint" href="{% url 'professor-delete' professor.pk %}">Apagar</a>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+</div>
