@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /accounts/
+Disallow: /gestao_escolar/
+
+Sitemap: https://ansistemas.net/sitemap.xml
